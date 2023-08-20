@@ -52,6 +52,7 @@ async function uploadToS3(path, originalFilename, mimetype) {
 }
 
 function getUserDataFromReq(req) {
+  console.log("coockies===>>",req.cookies.token)
   return new Promise((resolve, reject) => {
     jwt.verify(req.cookies.token, jwtSecret, {}, async (err, userData) => {
       if (err) throw err;
