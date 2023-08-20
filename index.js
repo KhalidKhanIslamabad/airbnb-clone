@@ -94,7 +94,7 @@ app.post('/api/login', async (req, res) => {
         id: userDoc._id
       }, jwtSecret, {}, (err, token) => {
         if (err) throw err;
-        res.cookie('token', token).json({...userDoc,token});
+        res.cookie('token', token).json(userDoc);
       });
     } else {
       res.status(422).json('pass not ok');
@@ -223,7 +223,7 @@ app.put('/api/places', async (req, res) => {
 
 app.get('/api/places', async (req, res) => {
   mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority");
-  res.json(await Place.find());
+  res.json(await Place.find({}));
 });
 
 app.post('/api/bookings', async (req, res) => {
