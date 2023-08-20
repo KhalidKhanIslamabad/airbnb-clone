@@ -190,7 +190,8 @@ app.get('/api/user-places', (req, res) => {
   const { token } = req.cookies;
   console.log(token)
   jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-    res.json(await Place.find({ owner: userData.id }));
+    const data=await Place.find({ owner: userData.id })
+    res.json(data);
   });
 });
 
