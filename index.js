@@ -94,7 +94,7 @@ app.post('/api/login', async (req, res) => {
         id: userDoc._id
       }, jwtSecret, {}, (err, token) => {
         if (err) throw err;
-        res.cookie('token', token).json(userDoc);
+        res.cookie('token', token).json({...userDoc,token});
       });
     } else {
       res.status(422).json('pass not ok');
