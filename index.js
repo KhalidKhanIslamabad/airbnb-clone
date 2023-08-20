@@ -43,7 +43,7 @@ function getUserDataFromReq(req) {
 app.get("/", async (req, res) => {
   try {
 
-    await mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority");
+    await mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority",{ useNewUrlParser: true, useUnifiedTopology: true });
     console.log("database connected!");
     res.json("hello world")
   }
@@ -55,7 +55,7 @@ app.get("/", async (req, res) => {
 app.get('/api/test', async (req, res) => {
 
   try {
-    await mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority");
+    await mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority",{ useNewUrlParser: true, useUnifiedTopology: true });
     console.log("database connected!");
     res.json('test ok');
   } catch (error) {
@@ -66,7 +66,7 @@ app.get('/api/test', async (req, res) => {
 
 app.post('/api/register', async (req, res) => {
   console.log(req.body)
-  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority");
+  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority",{ useNewUrlParser: true, useUnifiedTopology: true });
   const { name, email, password } = req.body;
 
   try {
@@ -83,7 +83,7 @@ app.post('/api/register', async (req, res) => {
 });
 
 app.post('/api/login', async (req, res) => {
-  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority");
+  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority",{ useNewUrlParser: true, useUnifiedTopology: true });
   const { email, password } = req.body;
   const userDoc = await User.findOne({ email });
   if (userDoc) {
@@ -105,7 +105,7 @@ app.post('/api/login', async (req, res) => {
 });
 
 app.get('/api/profile', (req, res) => {
-  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority");
+  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority",{ useNewUrlParser: true, useUnifiedTopology: true });
   const { token } = req.cookies;
   if (token) {
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
@@ -167,7 +167,7 @@ app.post('/api/upload', upload.array('photos', 100), (req, res) => {
 });
 
 app.post('/api/places', (req, res) => {
-  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority");
+  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority",{ useNewUrlParser: true, useUnifiedTopology: true });
   const { token } = req.cookies;
   const {
     title, address, addedPhotos, description, price,
@@ -185,23 +185,22 @@ app.post('/api/places', (req, res) => {
 });
 
 app.get('/api/user-places', (req, res) => {
-  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority");
+  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority",{ useNewUrlParser: true, useUnifiedTopology: true });
   const { token } = req.cookies;
   console.log("token===>>",token)
   jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-    const { id } = userData;
-    res.json(await Place.find({ owner: id }));
+    res.json(await Place.find({ owner: userData.id }));
   });
 });
 
 app.get('/api/places/:id', async (req, res) => {
-  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority");
+  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority",{ useNewUrlParser: true, useUnifiedTopology: true });
   const { id } = req.params;
   res.json(await Place.findById(id));
 });
 
 app.put('/api/places', async (req, res) => {
-  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority");
+  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority",{ useNewUrlParser: true, useUnifiedTopology: true });
   const { token } = req.cookies;
   const {
     id, title, address, addedPhotos, description,
@@ -222,12 +221,12 @@ app.put('/api/places', async (req, res) => {
 });
 
 app.get('/api/places', async (req, res) => {
-  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority");
+  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority",{ useNewUrlParser: true, useUnifiedTopology: true });
   res.json(await Place.find({}));
 });
 
 app.post('/api/bookings', async (req, res) => {
-  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority");
+  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority",{ useNewUrlParser: true, useUnifiedTopology: true });
   const userData = await getUserDataFromReq(req);
   const {
     place, checkIn, checkOut, numberOfGuests, name, phone, price,
@@ -245,7 +244,7 @@ app.post('/api/bookings', async (req, res) => {
 
 
 app.get('/api/bookings', async (req, res) => {
-  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority");
+  mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority",{ useNewUrlParser: true, useUnifiedTopology: true });
   const userData = await getUserDataFromReq(req);
   res.json(await Booking.find({ user: userData.id }).populate('place'));
 });
