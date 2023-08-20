@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: 'https://airbnb-frontend-iota.vercel.app',
   credentials: true, // Enable sending cookies and headers with credentials
 };
 
