@@ -208,6 +208,7 @@ app.post('/api/places', (req, res) => {
 app.get('/api/user-places', (req, res) => {
   mongoose.connect("mongodb+srv://ali:1234@nodeandexpress-projects.gnvwa.mongodb.net/?retryWrites=true&w=majority");
   const { token } = req.cookies;
+  console.log("token===>>",token)
   jwt.verify(token, jwtSecret, {}, async (err, userData) => {
     const { id } = userData;
     res.json(await Place.find({ owner: id }));
